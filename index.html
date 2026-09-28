@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Belajar Dasar DOM JavaScript</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 600px;
+        margin: 30px auto;
+        padding: 20px;
+        background-color: #f4f4f9;
+      }
+      h1 {
+        color: #333;
+      }
+      .section {
+        background: white;
+        padding: 15px;
+        margin-bottom: 15px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      .box {
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+      }
+      button {
+        padding: 8px 12px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Belajar Dasar DOM JavaScript</h1>
+
+    <!-- Bagian 1: Selector -->
+    <div class="section">
+      <h2 id="main-title">1. Query Selector</h2>
+      <p class="list-item">Item daftar pertama</p>
+      <p class="list-item">Item daftar kedua</p>
+    </div>
+
+    <!-- Bagian 2: Content -->
+    <div class="section">
+      <h2>2. InnerHTML & TextContent</h2>
+      <p id="info">Status: Menunggu...</p>
+      <div id="container"></div>
+    </div>
+
+    <!-- Bagian 3: Atribut & Style -->
+    <div class="section">
+      <h2>3. Manipulasi Atribut & Style</h2>
+      <button id="action-button">Tombol Aksi</button>
+      <div class="box" id="target-box">Kotak Target Style</div>
+    </div>
+
+    <!-- Script JavaScript -->
+    <script>
+      // ==========================================
+      // 1. querySelector & querySelectorAll
+      // ==========================================
+      const judulUtama = document.querySelector("#main-title");
+      console.log("Judul Utama:", judulUtama);
+
+      const semuaItem = document.querySelectorAll(".list-item");
+      console.log(`Jumlah item ditemukan: ${semuaItem.length}`);
+
+      // ==========================================
+      // 2. innerHTML, textContent, & innerText
+      // ==========================================
+      const container = document.querySelector("#container");
+
+      function tambahKonten(teks) {
+        const kotakBaru = document.createElement("div");
+        kotakBaru.classList.add("box");
+
+        // innerHTML bisa memasukkan tag HTML ke dalam elemen
+        kotakBaru.innerHTML = `
+                <p>${teks}</p>
+                <span>Status: Baru</span>
+            `;
+
+        container.appendChild(kotakBaru);
+      }
+
+      // Jalankan fungsi
+      tambahKonten("Halo, ini konten baru dari JavaScript!");
+
+      const infoText = document.querySelector("#info");
+      if (infoText) {
+        infoText.textContent = "Status: Berhasil dimuat!";
+      }
+
+      // ==========================================
+      // 3. Manipulasi Atribut dan Style
+      // ==========================================
+      const tombol = document.querySelector("#action-button");
+      const kotak = document.querySelector("#target-box");
+
+      if (tombol && kotak) {
+        // 1. Manipulasi Atribut (membuat tombol tidak bisa diklik)
+        tombol.setAttribute("disabled", "true");
+        tombol.textContent = "Tombol Dinonaktifkan";
+
+        // 2. Manipulasi Style (mengubah tampilan CSS kotak)
+        kotak.style.backgroundColor = "#3498db";
+        kotak.style.color = "white";
+        kotak.style.padding = "15px";
+        kotak.style.borderRadius = "5px";
+      }
+    </script>
+  </body>
+</html>
