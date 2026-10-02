@@ -17,7 +17,7 @@
         padding: 24px;
       }
       .wrap {
-        max-width: 560px;
+        max-width: 600px;
         margin: 0 auto;
       }
       h1 {
@@ -32,14 +32,30 @@
       form,
       .cari {
         display: flex;
+        flex-wrap: wrap;
+        align-items: center;
         gap: 8px;
         margin-bottom: 12px;
       }
-      input {
-        flex: 1;
+      input,
+      select {
+        flex: 1 1 140px;
         padding: 8px 10px;
         border: 1.5px solid #cbd5e1;
         border-radius: 8px;
+        background: #fff;
+      }
+      input.salah {
+        border-color: #dc2626;
+      } /* [8] input yang gagal validasi */
+      label {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 13px;
+      }
+      input[type="checkbox"] {
+        flex: none;
       }
       button {
         padding: 7px 12px;
@@ -59,6 +75,14 @@
         min-height: 18px;
         margin-bottom: 8px;
       }
+      #detail {
+        font-size: 13px;
+        color: #475569;
+        background: #e2e8f0;
+        border-radius: 8px;
+        padding: 8px 10px;
+        margin-bottom: 12px;
+      }
       ul {
         list-style: none;
         display: grid;
@@ -76,11 +100,11 @@
       }
       li.dipilih {
         box-shadow: 0 0 0 3px #2563eb;
-      } /* classList.toggle */
-      li.habis {
-        border-left-color: #cbd5e1;
-        opacity: 0.7;
-      } /* classList.add */
+      }
+      li.dipinjam {
+        border-left-color: #f59e0b;
+        background: #fffbeb;
+      }
       .info {
         flex: 1;
         font-size: 14px;
@@ -89,10 +113,14 @@
         display: block;
         color: #64748b;
       }
+      .aksi {
+        display: flex;
+        gap: 6px;
+      }
       .kosong {
-        text-align: center;
+        justify-content: center;
         color: #94a3b8;
-        padding: 16px;
+        cursor: default;
       }
     </style>
   </head>
@@ -101,31 +129,36 @@
       <h1>📚 Perpus Mini</h1>
       <p id="status">0 buku</p>
 
-      <!-- 5. event submit -->
+      <!-- [5][8] submit: atribut name dibutuhkan oleh FormData -->
       <form id="form-buku">
-        <input id="input-judul" placeholder="Judul buku" />
-        <input
-          id="input-stok"
-          type="number"
-          min="0"
-          value="1"
-          style="max-width: 70px"
-        />
+        <input name="judul" id="input-judul" placeholder="Judul buku" />
+        <input name="penulis" id="input-penulis" placeholder="Penulis" />
+        <label
+          ><input type="checkbox" name="langsung" /> Langsung dipinjam</label
+        >
         <button type="submit">Tambah</button>
       </form>
       <p id="pesan"></p>
 
-      <!-- 5. event input -->
+      <!-- [5] input & change: cari + filter -->
       <div class="cari">
         <input id="input-cari" placeholder="Cari judul..." />
+        <select id="filter-status">
+          <option value="semua">Semua</option>
+          <option value="tersedia">Tersedia</option>
+          <option value="dipinjam">Dipinjam</option>
+        </select>
       </div>
+
+      <!-- [9] hasil traversal: sebelumnya / berikutnya -->
+      <p id="detail"></p>
 
       <ul id="daftar-buku"></ul>
     </div>
 
     <script>
       /* ==========================================================
-   CATATAN SINGKAT (tanda [1]-[6] mengikuti poin di README)
+   CATATAN SINGKAT (tanda [1]-[10] mengikuti poin di README)
    [1] querySelector     -> ambil 1 elemen pertama (null jika tidak ada)
        querySelectorAll  -> ambil semua elemen (NodeList, pakai forEach)
    [2] textContent -> isi sebagai teks biasa (aman untuk input pengguna)
@@ -139,63 +172,157 @@
        submit -> form dikirim (preventDefault = cegah reload)
    [6] Bubbling -> event naik dari anak ke parent
        stopPropagation -> hentikan naiknya event
-       Delegation -> 1 listener di parent untuk banyak anak
+   [7] Event delegation -> 1 listener di parent untuk banyak anak
+       closest() = cari elemen terdekat | dataset = baca atribut data-*
+   [8] Ambil data & validasi -> value selalu string, trim(), FormData,
+       fungsi validasi mengembalikan pesan error (atau null jika valid)
+   [9] Traversal -> parentElement, children, firstElementChild,
+       lastElementChild, previousElementSibling, nextElementSibling
+   [10] Render -> ubah DATA (array) dulu, lalu panggil renderBuku()
    ========================================================== */
 
       // [1] Pilih elemen: querySelector -> 1 elemen berdasarkan selector CSS
       const form = document.querySelector("#form-buku");
       const inputJudul = document.querySelector("#input-judul");
-      const inputStok = document.querySelector("#input-stok");
+      const inputPenulis = document.querySelector("#input-penulis");
       const inputCari = document.querySelector("#input-cari");
+      const filterStatus = document.querySelector("#filter-status");
       const pesan = document.querySelector("#pesan");
       const elStatus = document.querySelector("#status");
+      const detail = document.querySelector("#detail");
       const daftar = document.querySelector("#daftar-buku");
 
-      // [4] Buat elemen baru dengan createElement (belum tampil sebelum dimasukkan ke DOM)
-      function buatItem(judul, stok) {
+      // [10] DATA = sumber kebenaran. Tampilan selalu digambar dari data ini.
+      let daftarBuku = [
+        {
+          id: 1,
+          judul: "Laskar Pelangi",
+          penulis: "Andrea Hirata",
+          dipinjam: false,
+        },
+        {
+          id: 2,
+          judul: "Bumi Manusia",
+          penulis: "Pramoedya Ananta Toer",
+          dipinjam: true,
+        },
+        {
+          id: 3,
+          judul: "Atomic Habits",
+          penulis: "James Clear",
+          dipinjam: false,
+        },
+      ];
+      let idDipilih = null; // id buku yang sedang dipilih (null = tidak ada)
+
+      // [4] Buat satu kartu buku dengan createElement (belum tampil sebelum dimasukkan ke DOM)
+      function buatKartu(buku) {
         const li = document.createElement("li");
-        li.dataset.stok = stok; // simpan stok di atribut data-stok
+        li.dataset.id = buku.id; // [7] simpan id di data-id
+        li.classList.toggle("dipinjam", buku.dipinjam); // [3] true -> tambah class, false -> hapus
+        li.classList.toggle("dipilih", buku.id === idDipilih);
 
         const info = document.createElement("div");
         info.className = "info";
-        const nama = document.createElement("strong");
-        nama.textContent = judul; // [2] textContent: teks biasa, aman
-        const sisa = document.createElement("small");
-        sisa.className = "sisa";
-        info.append(nama, sisa); // [4] append: boleh banyak elemen sekaligus
+        const judul = document.createElement("strong");
+        judul.textContent = buku.judul; // [2] textContent: teks biasa, aman
+        const sub = document.createElement("small");
+        sub.textContent = `${buku.penulis} · ${buku.dipinjam ? "Dipinjam" : "Tersedia"}`;
+        info.append(judul, sub); // [4] append: boleh banyak elemen sekaligus
 
+        // [10] Tombol aksi: data-aksi memberi tahu listener tombol ini untuk apa
         const pinjam = document.createElement("button");
-        pinjam.textContent = "Pinjam";
-        pinjam.className = "pinjam";
+        pinjam.textContent = buku.dipinjam ? "Kembalikan" : "Pinjam";
+        pinjam.dataset.aksi = "pinjam";
+
         const hapus = document.createElement("button");
         hapus.textContent = "Hapus";
-        hapus.className = "hapus";
+        hapus.dataset.aksi = "hapus";
+        if (buku.dipinjam) {
+          hapus.setAttribute("disabled", "true"); // [3] buku yang dipinjam tidak boleh dihapus
+          hapus.setAttribute("title", "Kembalikan dulu sebelum menghapus");
+        }
 
-        li.append(info, pinjam, hapus);
-        perbaruiItem(li);
+        const aksi = document.createElement("div");
+        aksi.className = "aksi";
+        aksi.append(pinjam, hapus);
+
+        li.append(info, aksi);
         return li;
       }
 
-      // [3] Atribut & class: tampilan item mengikuti nilai stok
-      function perbaruiItem(li) {
-        const stok = Number(li.getAttribute("data-stok")); // baca atribut
-        const pinjam = li.querySelector(".pinjam");
-        li.querySelector(".sisa").textContent =
-          stok > 0 ? `Stok: ${stok}` : "Habis";
-        li.classList.toggle("habis", stok === 0); // true -> tambah class, false -> hapus
-        if (stok === 0)
-          pinjam.setAttribute("disabled", "true"); // matikan tombol
-        else pinjam.removeAttribute("disabled"); // aktifkan lagi
+      // [10] Gambar ulang daftar dari data (dipanggil setiap data / filter berubah)
+      function renderBuku() {
+        const kata = inputCari.value.trim().toLowerCase(); // [8] value + trim
+        const status = filterStatus.value; // [8] value dari <select>
+
+        const tampil = daftarBuku.filter((buku) => {
+          const cocokJudul = buku.judul.toLowerCase().includes(kata);
+          const cocokStatus =
+            status === "semua" || (status === "dipinjam") === buku.dipinjam;
+          return cocokJudul && cocokStatus;
+        });
+
+        daftar.innerHTML = ""; // kosongkan dulu
+        if (tampil.length === 0) {
+          // [2] innerHTML: HTML buatan sendiri, bukan dari input pengguna
+          const teks =
+            daftarBuku.length === 0
+              ? "Belum ada buku."
+              : "Tidak ada buku yang cocok.";
+          daftar.innerHTML = `<li class="kosong"><em>${teks}</em></li>`;
+        } else {
+          tampil.forEach((buku) => daftar.append(buatKartu(buku)));
+        }
+
+        const jumlahDipinjam = daftarBuku.filter(
+          (buku) => buku.dipinjam,
+        ).length;
+        elStatus.textContent = `${daftarBuku.length} buku · ${jumlahDipinjam} dipinjam`;
+        perbaruiDetail();
       }
 
-      function perbaruiStatus() {
-        // [1] querySelectorAll -> semua <li> buku (kecuali pesan kosong)
-        const total = daftar.querySelectorAll("li:not(.kosong)").length;
-        elStatus.textContent = `${total} buku`;
-        if (total === 0) {
-          // [2] innerHTML: HTML buatan sendiri, bukan dari input pengguna
-          daftar.innerHTML = `<li class="kosong"><em>Belum ada buku.</em></li>`;
+      // [9] Traversal: dari kartu terpilih, lihat saudara dan posisinya
+      function perbaruiDetail() {
+        const kartu = daftar.querySelector("li.dipilih"); // [1]
+        if (!kartu) {
+          detail.textContent = "Klik sebuah buku untuk melihat posisinya.";
+          return;
         }
+        const namaDari = (li) =>
+          li ? li.querySelector("strong").textContent : "-";
+        const urutan = [...daftar.children].indexOf(kartu) + 1; // children -> HTMLCollection, ubah ke array
+        const posisi =
+          kartu === daftar.firstElementChild
+            ? " (pertama)"
+            : kartu === daftar.lastElementChild
+              ? " (terakhir)"
+              : "";
+
+        detail.textContent =
+          `Dipilih: ${namaDari(kartu)} · urutan ${urutan} dari ${daftar.children.length}${posisi}` +
+          ` · sebelumnya: ${namaDari(kartu.previousElementSibling)}` +
+          ` · berikutnya: ${namaDari(kartu.nextElementSibling)}`;
+      }
+
+      // [8] Validasi: kembalikan { input, pesan } jika salah, atau null jika valid
+      function validasiBuku(judul, penulis) {
+        if (judul === "")
+          return { input: inputJudul, pesan: "Judul wajib diisi." };
+        if (judul.length < 3)
+          return { input: inputJudul, pesan: "Judul minimal 3 karakter." };
+        if (penulis === "")
+          return { input: inputPenulis, pesan: "Penulis wajib diisi." };
+
+        const sudahAda = daftarBuku.some(
+          (buku) => buku.judul.toLowerCase() === judul.toLowerCase(),
+        );
+        if (sudahAda)
+          return {
+            input: inputJudul,
+            pesan: "Buku dengan judul itu sudah ada.",
+          };
+        return null;
       }
 
       function tampilkanPesan(teks, warna) {
@@ -206,60 +333,75 @@
       // [5] submit: dijalankan saat form dikirim
       form.addEventListener("submit", (event) => {
         event.preventDefault(); // cegah halaman reload
-        const judul = inputJudul.value.trim();
-        if (judul === "")
-          return tampilkanPesan("Judul wajib diisi.", "#dc2626");
 
-        daftar.querySelector(".kosong")?.remove(); // [4] remove: hapus pesan kosong
-        daftar.prepend(buatItem(judul, Number(inputStok.value))); // [4] prepend: taruh paling atas
-        perbaruiStatus();
-        tampilkanPesan(`"${judul}" berhasil ditambahkan.`, "#16a34a");
-        form.reset();
-      });
+        // [8] FormData: ambil semua input ber-name sekaligus -> { judul, penulis, langsung? }
+        const data = Object.fromEntries(new FormData(form));
+        const judul = data.judul.trim(); // trim: buang spasi di awal & akhir
+        const penulis = data.penulis.trim();
+        const langsungPinjam = data.langsung === "on"; // checkbox hanya ada di FormData jika dicentang
 
-      // [5] input: dijalankan setiap huruf diketik -> pencarian langsung
-      inputCari.addEventListener("input", () => {
-        const kata = inputCari.value.toLowerCase();
-        // [1] querySelectorAll + forEach: periksa tiap buku
-        daftar.querySelectorAll("li:not(.kosong)").forEach((li) => {
-          const cocok = li
-            .querySelector("strong")
-            .textContent.toLowerCase()
-            .includes(kata);
-          li.style.display = cocok ? "" : "none"; // [3] sembunyikan yang tidak cocok
+        const error = validasiBuku(judul, penulis);
+        if (error) {
+          error.input.classList.add("salah"); // [3]
+          error.input.focus();
+          return tampilkanPesan(error.pesan, "#dc2626");
+        }
+
+        // [10] ubah DATA dulu, lalu render ulang
+        daftarBuku.unshift({
+          id: Date.now(),
+          judul,
+          penulis,
+          dipinjam: langsungPinjam,
         });
+        form.reset();
+        tampilkanPesan(`"${judul}" berhasil ditambahkan.`, "#16a34a");
+        renderBuku();
       });
 
-      // [6] Event delegation: 1 listener di <ul> untuk semua item,
-      //     termasuk item yang baru ditambahkan nanti (klik "naik" lewat bubbling).
+      // [7] Delegation di <form>: input apa pun yang diketik -> hapus tanda error-nya
+      form.addEventListener("input", (event) => {
+        event.target.classList.remove("salah");
+      });
+
+      // [5] input: setiap huruf diketik -> render ulang dengan kata cari baru
+      inputCari.addEventListener("input", renderBuku);
+      // [5] change: <select> berubah -> render ulang dengan filter baru
+      filterStatus.addEventListener("change", renderBuku);
+
+      // [7] Event delegation: 1 listener di <ul> untuk semua kartu & tombolnya.
+      //     Kartu dibuat ulang tiap render, tapi listener ini tetap hidup.
       daftar.addEventListener("click", (event) => {
-        // event.target = elemen yang benar-benar diklik; closest("li") = kartu pemiliknya
-        const li = event.target.closest("li");
-        if (!li || li.classList.contains("kosong")) return;
+        // [9] closest() naik ke atas sampai ketemu <li>. (tombol.parentElement hanya
+        //     menghasilkan div.aksi, bukan <li>, jadi closest() lebih aman.)
+        const kartu = event.target.closest("li[data-id]");
+        if (!kartu) return;
 
-        if (event.target.matches(".pinjam")) {
-          event.stopPropagation(); // [6] hentikan bubbling (di sini: kartu tidak ikut terpilih)
-          li.dataset.stok = Number(li.dataset.stok) - 1;
-          perbaruiItem(li);
+        const id = Number(kartu.dataset.id); // dataset selalu string -> ubah ke angka
+        const tombol = event.target.closest("button[data-aksi]");
+
+        // Klik di bagian kartu selain tombol: pilih / batal pilih
+        if (!tombol) {
+          idDipilih = idDipilih === id ? null : id;
+          renderBuku();
           return;
         }
-        if (event.target.matches(".hapus")) {
-          li.remove(); // [4] hapus kartu dari halaman
-          perbaruiStatus();
-          return;
+
+        // Klik tombol: di sini kita langsung return, jadi kartu tidak ikut terpilih.
+        // [6] (Jika memakai listener terpisah per tombol, gunakan event.stopPropagation())
+        const aksi = tombol.dataset.aksi;
+        if (aksi === "pinjam") {
+          const buku = daftarBuku.find((item) => item.id === id);
+          buku.dipinjam = !buku.dipinjam; // [10] ubah data
         }
-        li.classList.toggle("dipilih"); // [3] klik bagian lain kartu: pilih / batal pilih
+        if (aksi === "hapus") {
+          daftarBuku = daftarBuku.filter((item) => item.id !== id); // [10] buang dari data
+          if (idDipilih === id) idDipilih = null;
+        }
+        renderBuku(); // [10] tampilan mengikuti data
       });
 
-      // Data awal (reverse() supaya urutan tampil sama, karena prepend menaruh di atas)
-      [
-        ["Laskar Pelangi", 3],
-        ["Bumi Manusia", 0],
-        ["Atomic Habits", 5],
-      ]
-        .reverse()
-        .forEach(([judul, stok]) => daftar.prepend(buatItem(judul, stok)));
-      perbaruiStatus();
+      renderBuku();
       console.log("[2] innerText status:", elStatus.innerText);
     </script>
   </body>

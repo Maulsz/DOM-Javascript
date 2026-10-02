@@ -127,12 +127,12 @@ semuaItem.forEach((item) => {
 
 ### Perbedaan `querySelector()` dan `querySelectorAll()`
 
-| Aspek | `querySelector()` | `querySelectorAll()` |
-|---|---|---|
-| Jumlah elemen yang diambil | Satu elemen pertama | Semua elemen yang cocok |
-| Hasil | `Element` atau `null` | `NodeList` |
-| Cocok untuk | Satu tombol, satu judul, satu input | Banyak item, banyak tombol, banyak card |
-| Contoh | `document.querySelector("#judul")` | `document.querySelectorAll(".item")` |
+| Aspek                      | `querySelector()`                   | `querySelectorAll()`                    |
+| -------------------------- | ----------------------------------- | --------------------------------------- |
+| Jumlah elemen yang diambil | Satu elemen pertama                 | Semua elemen yang cocok                 |
+| Hasil                      | `Element` atau `null`               | `NodeList`                              |
+| Cocok untuk                | Satu tombol, satu judul, satu input | Banyak item, banyak tombol, banyak card |
+| Contoh                     | `document.querySelector("#judul")`  | `document.querySelectorAll(".item")`    |
 
 ## 2. innerHTML, textContent, dan innerText
 
@@ -249,11 +249,11 @@ teks di dalam elemen tersebut biasanya tidak akan ikut terbaca oleh `innerText`.
 
 ### Perbedaan `innerHTML`, `textContent`, dan `innerText`
 
-| Properti | Fungsi | HTML diproses | Memperhatikan elemen tersembunyi |
-|---|---|---:|---:|
-| `innerHTML` | Membaca atau mengubah isi dalam bentuk HTML | Ya | Tidak menjadi fokus |
-| `textContent` | Membaca atau mengubah teks biasa | Tidak | Ya, teks tetap terbaca |
-| `innerText` | Membaca atau mengubah teks yang terlihat | Tidak | Tidak, hanya teks yang terlihat |
+| Properti      | Fungsi                                      | HTML diproses | Memperhatikan elemen tersembunyi |
+| ------------- | ------------------------------------------- | ------------: | -------------------------------: |
+| `innerHTML`   | Membaca atau mengubah isi dalam bentuk HTML |            Ya |              Tidak menjadi fokus |
+| `textContent` | Membaca atau mengubah teks biasa            |         Tidak |           Ya, teks tetap terbaca |
+| `innerText`   | Membaca atau mengubah teks yang terlihat    |         Tidak |  Tidak, hanya teks yang terlihat |
 
 Contoh sederhana:
 
@@ -299,16 +299,16 @@ Contoh:
 
 Beberapa contoh atribut HTML:
 
-| Atribut | Fungsi |
-|---|---|
-| `id` | Memberikan identitas unik pada elemen |
-| `class` | Memberikan nama class CSS pada elemen |
-| `src` | Menentukan sumber file, biasanya pada gambar atau video |
-| `href` | Menentukan tujuan link |
-| `alt` | Menentukan teks alternatif untuk gambar |
-| `disabled` | Menonaktifkan input atau tombol |
-| `placeholder` | Menampilkan petunjuk pada input |
-| `title` | Menampilkan informasi tambahan saat elemen diarahkan cursor |
+| Atribut       | Fungsi                                                      |
+| ------------- | ----------------------------------------------------------- |
+| `id`          | Memberikan identitas unik pada elemen                       |
+| `class`       | Memberikan nama class CSS pada elemen                       |
+| `src`         | Menentukan sumber file, biasanya pada gambar atau video     |
+| `href`        | Menentukan tujuan link                                      |
+| `alt`         | Menentukan teks alternatif untuk gambar                     |
+| `disabled`    | Menonaktifkan input atau tombol                             |
+| `placeholder` | Menampilkan petunjuk pada input                             |
+| `title`       | Menampilkan informasi tambahan saat elemen diarahkan cursor |
 
 ### `getAttribute()`
 
@@ -417,13 +417,13 @@ Perubahan tersebut setara dengan CSS berikut:
 
 Namun, ketika menulis CSS melalui JavaScript, nama properti menggunakan format `camelCase`.
 
-| CSS | JavaScript |
-|---|---|
+| CSS                | JavaScript        |
+| ------------------ | ----------------- |
 | `background-color` | `backgroundColor` |
-| `font-size` | `fontSize` |
-| `text-align` | `textAlign` |
-| `border-radius` | `borderRadius` |
-| `margin-top` | `marginTop` |
+| `font-size`        | `fontSize`        |
+| `text-align`       | `textAlign`       |
+| `border-radius`    | `borderRadius`    |
+| `margin-top`       | `marginTop`       |
 
 Contoh lain:
 
@@ -441,11 +441,11 @@ Selain menggunakan `style` secara langsung, cara yang lebih rapi untuk mengubah 
 
 Method yang sering digunakan:
 
-| Method | Fungsi |
-|---|---|
-| `classList.add()` | Menambahkan class |
-| `classList.remove()` | Menghapus class |
-| `classList.toggle()` | Menambah atau menghapus class secara bergantian |
+| Method                 | Fungsi                                          |
+| ---------------------- | ----------------------------------------------- |
+| `classList.add()`      | Menambahkan class                               |
+| `classList.remove()`   | Menghapus class                                 |
+| `classList.toggle()`   | Menambah atau menghapus class secara bergantian |
 | `classList.contains()` | Memeriksa apakah elemen memiliki class tertentu |
 
 Contoh:
@@ -614,10 +614,10 @@ container.append(judul);
 
 Perbedaan sederhana antara `appendChild()` dan `append()`:
 
-| Method | Fungsi |
-|---|---|
-| `appendChild()` | Menambahkan satu node atau elemen |
-| `append()` | Dapat menambahkan node, elemen, atau teks biasa |
+| Method          | Fungsi                                          |
+| --------------- | ----------------------------------------------- |
+| `appendChild()` | Menambahkan satu node atau elemen               |
+| `append()`      | Dapat menambahkan node, elemen, atau teks biasa |
 
 Contoh `append()` dengan teks:
 
@@ -810,9 +810,7 @@ Contoh toggle class dengan event `click`:
 ```html
 <button id="tombol-mode">Ubah Mode</button>
 
-<div class="box" id="kotak">
-  Isi kotak
-</div>
+<div class="box" id="kotak">Isi kotak</div>
 ```
 
 ```css
@@ -1003,11 +1001,11 @@ Pada contoh tersebut:
 
 ### Perbedaan `click`, `input`, dan `submit`
 
-| Event | Terjadi ketika | Contoh penggunaan |
-|---|---|---|
-| `click` | Elemen diklik | Tombol, card, gambar, menu |
-| `input` | Nilai input berubah | Live search, jumlah karakter, preview teks |
-| `submit` | Form dikirim | Login, registrasi, tambah data |
+| Event    | Terjadi ketika      | Contoh penggunaan                          |
+| -------- | ------------------- | ------------------------------------------ |
+| `click`  | Elemen diklik       | Tombol, card, gambar, menu                 |
+| `input`  | Nilai input berubah | Live search, jumlah karakter, preview teks |
+| `submit` | Form dikirim        | Login, registrasi, tambah data             |
 
 ## 6. Event Bubbling dan `stopPropagation()`
 
@@ -1271,3 +1269,704 @@ Materi lanjutan DOM yang dipelajari adalah:
 - Event bubbling adalah proses event yang bergerak dari elemen anak ke elemen parent.
 - `event.stopPropagation()` digunakan untuk menghentikan event agar tidak diteruskan ke parent.
 - Event delegation memanfaatkan event bubbling agar satu event listener dapat menangani banyak elemen.
+
+## 7. Event Delegation
+
+Pada materi 6 sudah dikenalkan sedikit tentang event delegation. Pada bagian ini dibahas lebih lengkap, karena teknik ini sangat sering dipakai pada daftar data yang elemennya dibuat secara dinamis.
+
+### Masalah jika memasang listener pada setiap elemen
+
+```html
+<ul id="daftar">
+  <li>Item 1</li>
+  <li>Item 2</li>
+</ul>
+```
+
+```javascript
+const daftar = document.querySelector("#daftar");
+
+daftar.querySelectorAll("li").forEach((li) => {
+  li.addEventListener("click", () => {
+    console.log("Item diklik");
+  });
+});
+
+const itemBaru = document.createElement("li");
+itemBaru.textContent = "Item 3";
+daftar.appendChild(itemBaru);
+```
+
+Item 1 dan Item 2 merespons klik, tetapi **Item 3 tidak**. Penyebabnya, `querySelectorAll()` hanya mengambil elemen yang sudah ada saat kode dijalankan, sehingga elemen baru tidak memiliki listener.
+
+### Solusi: satu listener pada parent
+
+```javascript
+const daftar = document.querySelector("#daftar");
+
+daftar.addEventListener("click", (event) => {
+  const item = event.target.closest("li");
+
+  if (!item) return;
+
+  console.log(`Diklik: ${item.textContent}`);
+});
+```
+
+Sekarang semua `<li>`, termasuk yang ditambahkan nanti, otomatis ikut bekerja. Klik pada `<li>` naik ke `<ul>` melalui event bubbling, lalu listener pada `<ul>` yang memprosesnya.
+
+### `event.target.closest()`
+
+Pada materi 6, pengecekan dilakukan dengan `event.target.tagName === "LI"`. Cara itu bermasalah jika di dalam `<li>` ada elemen lain, misalnya `<span>` atau `<strong>`. Jika yang diklik adalah `<span>`, maka `event.target` adalah `<span>`, bukan `<li>`.
+
+`closest("selector")` mencari elemen terdekat yang cocok, mulai dari elemen itu sendiri lalu naik ke parent-nya.
+
+```javascript
+const item = event.target.closest("li");
+```
+
+Hasilnya `<li>` pemilik elemen yang diklik, atau `null` jika tidak ada.
+
+### `event.target.matches()`
+
+`matches("selector")` memeriksa apakah elemen cocok dengan selector. Hasilnya `true` atau `false`.
+
+```javascript
+if (event.target.matches(".tombol-hapus")) {
+  console.log("Yang diklik adalah tombol hapus");
+}
+```
+
+### Menandai aksi dengan `data-*`
+
+Atribut `data-*` digunakan untuk menyimpan informasi tambahan pada elemen. Nilainya dibaca melalui properti `dataset`.
+
+```html
+<ul id="daftar-tugas">
+  <li data-id="1">
+    <span>Belajar DOM</span>
+    <button data-aksi="selesai">Selesai</button>
+    <button data-aksi="hapus">Hapus</button>
+  </li>
+  <li data-id="2">
+    <span>Belajar Event</span>
+    <button data-aksi="selesai">Selesai</button>
+    <button data-aksi="hapus">Hapus</button>
+  </li>
+</ul>
+```
+
+```javascript
+const daftarTugas = document.querySelector("#daftar-tugas");
+
+daftarTugas.addEventListener("click", (event) => {
+  const tombol = event.target.closest("button[data-aksi]");
+
+  if (!tombol) return;
+
+  const item = tombol.closest("li");
+  const id = item.dataset.id;
+  const aksi = tombol.dataset.aksi;
+
+  if (aksi === "selesai") {
+    item.classList.toggle("selesai");
+  } else if (aksi === "hapus") {
+    item.remove();
+  }
+
+  console.log(`Aksi ${aksi} pada tugas ${id}`);
+});
+```
+
+Penjelasan:
+
+- Satu listener menangani semua tombol `Selesai` dan `Hapus`.
+- `closest("button[data-aksi]")` memastikan yang diklik adalah tombol aksi.
+- `tombol.dataset.aksi` membaca nilai dari `data-aksi`.
+- `item.dataset.id` membaca nilai dari `data-id`.
+
+### Perbandingan
+
+| Aspek                         | Listener pada setiap elemen | Event delegation                  |
+| ----------------------------- | --------------------------- | --------------------------------- |
+| Jumlah listener               | Banyak                      | Satu                              |
+| Elemen yang dibuat belakangan | Tidak otomatis ikut         | Otomatis ikut                     |
+| Penggunaan memori             | Lebih besar                 | Lebih hemat                       |
+| Cocok untuk                   | Elemen tunggal dan tetap    | Daftar, tabel, card, menu dinamis |
+
+### Catatan
+
+Event delegation bergantung pada bubbling. Beberapa event tidak mengalami bubbling, misalnya `focus` dan `blur`. Sebagai gantinya dapat digunakan `focusin` dan `focusout`, yang mengalami bubbling.
+
+## 8. Ambil Data dan Validasi
+
+Pada aplikasi yang memiliki form, JavaScript perlu mengambil data yang diisi pengguna, lalu memeriksa apakah data tersebut layak diproses.
+
+### Mengambil data dari input
+
+Nilai input dibaca melalui properti `value`.
+
+```javascript
+const inputNama = document.querySelector("#nama");
+
+console.log(inputNama.value);
+```
+
+Nilai `value` selalu berupa **string**, termasuk pada `<input type="number">`.
+
+```javascript
+const inputUmur = document.querySelector("#umur");
+
+console.log(typeof inputUmur.value); // "string"
+
+const umur = Number(inputUmur.value);
+```
+
+Cara mengambil data dari berbagai elemen:
+
+| Elemen                    | Cara mengambil data                                        |
+| ------------------------- | ---------------------------------------------------------- |
+| `<input type="text">`     | `input.value`                                              |
+| `<input type="number">`   | `Number(input.value)`                                      |
+| `<textarea>`              | `textarea.value`                                           |
+| `<select>`                | `select.value`                                             |
+| `<input type="checkbox">` | `checkbox.checked` (`true` atau `false`)                   |
+| `<input type="radio">`    | `document.querySelector("input[name='x']:checked")?.value` |
+
+### Merapikan data dengan `trim()`
+
+`trim()` menghapus spasi di awal dan akhir teks. Tanpa `trim()`, input yang hanya berisi spasi dianggap terisi.
+
+```javascript
+const judul = inputJudul.value.trim();
+```
+
+### Mengambil semua data form sekaligus dengan `FormData`
+
+```html
+<form id="form-buku">
+  <input type="text" name="judul" />
+  <input type="text" name="penulis" />
+  <button type="submit">Simpan</button>
+</form>
+```
+
+```javascript
+const form = document.querySelector("#form-buku");
+
+form.addEventListener("submit", (event) => {
+  event.preventDefault();
+
+  const data = Object.fromEntries(new FormData(form));
+
+  console.log(data); // { judul: "...", penulis: "..." }
+});
+```
+
+Agar `FormData` bekerja, setiap input harus memiliki atribut `name`.
+
+### Validasi data
+
+Validasi adalah pemeriksaan data sebelum diproses. Tujuannya mencegah data kosong, tidak masuk akal, atau duplikat.
+
+Validasi yang sering dilakukan:
+
+| Jenis validasi                | Contoh                           |
+| ----------------------------- | -------------------------------- |
+| Wajib diisi                   | `judul === ""`                   |
+| Panjang minimal atau maksimal | `judul.length < 3`               |
+| Angka                         | `Number.isNaN(umur)`, `umur < 0` |
+| Format                        | Email harus mengandung `@`       |
+| Duplikat                      | Judul sudah ada pada daftar      |
+
+### Contoh fungsi validasi
+
+Fungsi validasi sebaiknya dipisahkan dari kode DOM. Fungsi mengembalikan **pesan error** jika ada masalah, atau `""` jika data valid.
+
+```javascript
+function validasiJudul(judul, daftarJudul) {
+  if (judul === "") {
+    return "Judul wajib diisi.";
+  }
+
+  if (judul.length < 3) {
+    return "Judul minimal 3 karakter.";
+  }
+
+  if (daftarJudul.includes(judul.toLowerCase())) {
+    return "Judul sudah ada.";
+  }
+
+  return "";
+}
+```
+
+### Menampilkan hasil validasi
+
+```html
+<form id="form-judul">
+  <input type="text" id="input-judul" placeholder="Judul buku" />
+  <button type="submit">Tambah</button>
+</form>
+
+<p id="pesan"></p>
+```
+
+```javascript
+const form = document.querySelector("#form-judul");
+const inputJudul = document.querySelector("#input-judul");
+const pesan = document.querySelector("#pesan");
+
+const daftarJudul = ["laskar pelangi"];
+
+form.addEventListener("submit", (event) => {
+  event.preventDefault();
+
+  const judul = inputJudul.value.trim();
+  const error = validasiJudul(judul, daftarJudul);
+
+  if (error) {
+    pesan.textContent = error;
+    pesan.classList.add("error");
+    inputJudul.focus();
+    return;
+  }
+
+  daftarJudul.push(judul.toLowerCase());
+  pesan.textContent = "Berhasil ditambahkan.";
+  pesan.classList.remove("error");
+  form.reset();
+});
+```
+
+Alur kode tersebut:
+
+- Ambil nilai input, lalu rapikan dengan `trim()`.
+- Kirim ke fungsi validasi.
+- Jika ada error, tampilkan pesan dan hentikan proses dengan `return`.
+- Jika valid, proses data, lalu kosongkan form dengan `form.reset()`.
+
+### Hati-hati: `Number("")` menghasilkan `0`
+
+```javascript
+Number(""); // 0
+Number("abc"); // NaN
+```
+
+Input angka yang kosong akan terbaca sebagai `0`. Karena itu, periksa dulu apakah input kosong sebelum mengubahnya menjadi angka.
+
+```javascript
+if (inputStok.value === "") {
+  return "Stok wajib diisi.";
+}
+
+const stok = Number(inputStok.value);
+
+if (stok < 0) {
+  return "Stok tidak boleh negatif.";
+}
+```
+
+### Validasi bawaan HTML
+
+HTML memiliki atribut validasi sendiri, seperti `required`, `minlength`, `min`, dan `type="email"`.
+
+```html
+<input type="text" required minlength="3" />
+```
+
+Validasi bawaan dapat diperiksa dengan JavaScript menggunakan `form.checkValidity()`. Namun validasi manual dengan JavaScript tetap berguna karena pesan error dapat disesuaikan, dan aturan khusus seperti pengecekan duplikat dapat ditambahkan.
+
+## 9. DOM Traversal: Parent dan Children
+
+DOM Traversal adalah perpindahan dari satu elemen ke elemen lain yang berhubungan dengannya, seperti parent (induk), children (anak), dan sibling (saudara).
+
+### Struktur pohon DOM
+
+```html
+<ul id="daftar">
+  <li>Satu</li>
+  <li id="dua">Dua</li>
+  <li>Tiga</li>
+</ul>
+```
+
+```text
+ul#daftar          <- parent dari ketiga li
+├── li "Satu"      <- sibling sebelum #dua
+├── li#dua         <- elemen yang menjadi acuan
+└── li "Tiga"      <- sibling sesudah #dua
+```
+
+### Properti traversal
+
+| Properti                 | Fungsi                                   |
+| ------------------------ | ---------------------------------------- |
+| `parentElement`          | Elemen parent langsung                   |
+| `children`               | Semua elemen anak (`HTMLCollection`)     |
+| `firstElementChild`      | Elemen anak pertama                      |
+| `lastElementChild`       | Elemen anak terakhir                     |
+| `nextElementSibling`     | Elemen saudara berikutnya                |
+| `previousElementSibling` | Elemen saudara sebelumnya                |
+| `closest("selector")`    | Elemen terdekat yang cocok, naik ke atas |
+
+### Parent: `parentElement`
+
+```javascript
+const dua = document.querySelector("#dua");
+
+console.log(dua.parentElement); // <ul id="daftar">
+```
+
+Dapat digunakan berantai untuk naik lebih jauh.
+
+```javascript
+dua.parentElement.parentElement;
+```
+
+### Children: `children`
+
+```javascript
+const daftar = document.querySelector("#daftar");
+
+console.log(daftar.children); // HTMLCollection(3)
+console.log(daftar.children.length); // 3
+console.log(daftar.children[0]); // <li>Satu</li>
+console.log(daftar.firstElementChild); // <li>Satu</li>
+console.log(daftar.lastElementChild); // <li>Tiga</li>
+```
+
+`children` berupa `HTMLCollection`, bukan array. Agar dapat memakai `forEach()`, ubah dulu menjadi array.
+
+```javascript
+[...daftar.children].forEach((li) => {
+  console.log(li.textContent);
+});
+```
+
+### `children` dan `childNodes`
+
+`childNodes` ikut menghitung node teks, termasuk spasi dan baris baru di antara tag HTML. `children` hanya berisi elemen.
+
+```javascript
+console.log(daftar.childNodes.length); // lebih banyak, karena ikut menghitung node teks
+console.log(daftar.children.length); // 3
+```
+
+Untuk kebutuhan sehari-hari, gunakan `children`.
+
+### Sibling
+
+```javascript
+const dua = document.querySelector("#dua");
+
+console.log(dua.previousElementSibling); // <li>Satu</li>
+console.log(dua.nextElementSibling); // <li>Tiga</li>
+```
+
+Jika tidak ada saudara pada arah tersebut, hasilnya `null`.
+
+### Contoh: menghapus card dari tombol di dalamnya
+
+```html
+<div class="card">
+  <h3>Laskar Pelangi</h3>
+  <button class="hapus">Hapus</button>
+</div>
+```
+
+```javascript
+const tombol = document.querySelector(".hapus");
+
+tombol.addEventListener("click", () => {
+  tombol.parentElement.remove();
+});
+```
+
+Dari tombol, JavaScript naik ke parent-nya (`.card`) lalu menghapusnya.
+
+### Contoh: mengambil data di dalam card
+
+```javascript
+const card = tombol.closest(".card");
+const judul = card.querySelector("h3").textContent;
+
+console.log(judul); // "Laskar Pelangi"
+```
+
+`querySelector()` juga dapat dipanggil pada sebuah elemen, sehingga pencarian hanya dilakukan di dalam elemen tersebut.
+
+### `parentElement` atau `closest()`
+
+`parentElement` bergantung pada susunan HTML. Jika suatu hari tombol dibungkus elemen lain, `parentElement` akan menunjuk elemen yang salah.
+
+```html
+<div class="card">
+  <h3>Laskar Pelangi</h3>
+  <div class="aksi">
+    <button class="hapus">Hapus</button>
+  </div>
+</div>
+```
+
+```javascript
+tombol.parentElement; // <div class="aksi">, bukan .card
+tombol.closest(".card"); // tetap <div class="card">
+```
+
+Karena itu, `closest()` lebih aman jika struktur HTML dapat berubah.
+
+## 10. Perpus: Render Buku dan Tombol Aksi
+
+Bagian ini menggabungkan materi sebelumnya menjadi aplikasi perpustakaan sederhana yang dapat menampilkan daftar buku, menambah buku, meminjam atau mengembalikan buku, dan menghapus buku.
+
+### Prinsip utama: data dulu, lalu render
+
+Daripada mengubah elemen HTML satu per satu, simpan data dalam array, lalu buat fungsi `renderBuku()` yang menggambar ulang tampilan berdasarkan data.
+
+```text
+Pengguna klik tombol -> data di array diubah -> renderBuku() -> tampilan diperbarui
+```
+
+Dengan cara ini, data selalu menjadi sumber kebenaran, dan tampilan selalu mengikuti data.
+
+### Materi yang digunakan
+
+| Fitur                        | Materi                                                    |
+| ---------------------------- | --------------------------------------------------------- |
+| Menampilkan kartu buku       | `createElement`, `append`, `textContent` (materi 2 dan 4) |
+| Menandai kartu yang dipinjam | `classList`, `setAttribute` (materi 3)                    |
+| Form tambah buku             | Event `submit`, `preventDefault` (materi 5)               |
+| Pengecekan input             | Ambil data dan validasi (materi 8)                        |
+| Tombol Pinjam dan Hapus      | Event delegation, `dataset` (materi 7)                    |
+| Mencari kartu dari tombol    | `closest()` (materi 9)                                    |
+
+### HTML
+
+```html
+<h1>Perpustakaan</h1>
+<p id="info"></p>
+
+<form id="form-buku">
+  <input type="text" id="input-judul" placeholder="Judul buku" />
+  <input type="text" id="input-penulis" placeholder="Penulis" />
+  <button type="submit">Tambah Buku</button>
+</form>
+
+<p id="pesan"></p>
+
+<div id="daftar-buku"></div>
+```
+
+### CSS
+
+```css
+.card {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 8px;
+}
+
+.card.dipinjam {
+  background-color: #fff3cd;
+}
+
+.error {
+  color: red;
+}
+```
+
+### JavaScript
+
+**1. Data dan elemen**
+
+```javascript
+let daftarBuku = [
+  { id: 1, judul: "Laskar Pelangi", penulis: "Andrea Hirata", dipinjam: false },
+  {
+    id: 2,
+    judul: "Bumi Manusia",
+    penulis: "Pramoedya Ananta Toer",
+    dipinjam: true,
+  },
+  { id: 3, judul: "Atomic Habits", penulis: "James Clear", dipinjam: false },
+];
+
+const form = document.querySelector("#form-buku");
+const inputJudul = document.querySelector("#input-judul");
+const inputPenulis = document.querySelector("#input-penulis");
+const pesan = document.querySelector("#pesan");
+const info = document.querySelector("#info");
+const wadah = document.querySelector("#daftar-buku");
+```
+
+**2. Fungsi render**
+
+```javascript
+function renderBuku() {
+  wadah.innerHTML = ""; // kosongkan wadah sebelum menggambar ulang
+
+  if (daftarBuku.length === 0) {
+    const kosong = document.createElement("p");
+    kosong.textContent = "Belum ada buku.";
+    wadah.appendChild(kosong);
+  }
+
+  daftarBuku.forEach((buku) => {
+    const card = document.createElement("div");
+    card.className = "card";
+    card.dataset.id = buku.id;
+    card.classList.toggle("dipinjam", buku.dipinjam);
+
+    const judul = document.createElement("h3");
+    judul.textContent = buku.judul;
+
+    const penulis = document.createElement("p");
+    penulis.textContent = buku.penulis;
+
+    const status = document.createElement("strong");
+    status.textContent = buku.dipinjam ? "Dipinjam" : "Tersedia";
+
+    const tombolPinjam = document.createElement("button");
+    tombolPinjam.textContent = buku.dipinjam ? "Kembalikan" : "Pinjam";
+    tombolPinjam.dataset.aksi = "pinjam";
+
+    const tombolHapus = document.createElement("button");
+    tombolHapus.textContent = "Hapus";
+    tombolHapus.dataset.aksi = "hapus";
+
+    if (buku.dipinjam) {
+      tombolHapus.setAttribute("disabled", "true"); // buku yang dipinjam tidak boleh dihapus
+    }
+
+    card.append(judul, penulis, status, tombolPinjam, tombolHapus);
+    wadah.appendChild(card);
+  });
+
+  const jumlahDipinjam = daftarBuku.filter((buku) => buku.dipinjam).length;
+  info.textContent = `${daftarBuku.length} buku, ${jumlahDipinjam} dipinjam`;
+}
+```
+
+Catatan:
+
+- `textContent` dipakai untuk judul dan penulis karena datanya berasal dari input pengguna.
+- `dataset.id` pada kartu dan `dataset.aksi` pada tombol dipakai agar event listener tahu buku mana dan aksi apa yang dimaksud.
+- Tombol `Hapus` dinonaktifkan jika buku sedang dipinjam.
+
+**3. Tombol aksi dengan event delegation**
+
+```javascript
+wadah.addEventListener("click", (event) => {
+  const tombol = event.target.closest("button[data-aksi]");
+
+  if (!tombol) return;
+
+  const card = tombol.closest(".card");
+  const id = Number(card.dataset.id);
+
+  if (tombol.dataset.aksi === "pinjam") {
+    const buku = daftarBuku.find((item) => item.id === id);
+    buku.dipinjam = !buku.dipinjam;
+  }
+
+  if (tombol.dataset.aksi === "hapus") {
+    daftarBuku = daftarBuku.filter((item) => item.id !== id);
+  }
+
+  renderBuku();
+});
+```
+
+Penjelasan:
+
+- Listener hanya dipasang sekali pada `wadah`, bukan pada setiap tombol. Walaupun kartu dibuat ulang setiap `renderBuku()`, tombol tetap berfungsi.
+- `closest("button[data-aksi]")` memastikan hanya tombol aksi yang diproses.
+- `tombol.closest(".card")` mencari kartu pemilik tombol, lalu `dataset.id` memberi tahu buku yang dimaksud.
+- `find()` mencari buku berdasarkan `id`, sedangkan `filter()` membuat array baru tanpa buku yang dihapus.
+- `renderBuku()` dipanggil di akhir agar tampilan mengikuti data terbaru.
+
+**4. Form tambah buku dengan validasi**
+
+```javascript
+function validasiBuku(judul, penulis) {
+  if (judul === "" || penulis === "") {
+    return "Judul dan penulis wajib diisi.";
+  }
+
+  if (judul.length < 3) {
+    return "Judul minimal 3 karakter.";
+  }
+
+  const sudahAda = daftarBuku.some(
+    (buku) => buku.judul.toLowerCase() === judul.toLowerCase(),
+  );
+
+  if (sudahAda) {
+    return "Buku dengan judul tersebut sudah ada.";
+  }
+
+  return "";
+}
+
+form.addEventListener("submit", (event) => {
+  event.preventDefault();
+
+  const judul = inputJudul.value.trim();
+  const penulis = inputPenulis.value.trim();
+  const error = validasiBuku(judul, penulis);
+
+  if (error) {
+    pesan.textContent = error;
+    pesan.classList.add("error");
+    return;
+  }
+
+  daftarBuku.push({ id: Date.now(), judul, penulis, dipinjam: false });
+
+  pesan.textContent = "";
+  form.reset();
+  renderBuku();
+});
+```
+
+**5. Tampilkan pertama kali**
+
+```javascript
+renderBuku();
+```
+
+### Alur kerja aplikasi
+
+1. Halaman dibuka, `renderBuku()` menggambar kartu dari array `daftarBuku`.
+2. Pengguna menekan **Pinjam**. Listener pada `wadah` menangkap klik melalui bubbling.
+3. `closest()` dan `dataset` menentukan buku mana yang dimaksud.
+4. Data pada array diubah (`dipinjam` menjadi `true`).
+5. `renderBuku()` dipanggil lagi, kartu berubah menjadi **Dipinjam** dan tombol Hapus nonaktif.
+6. Saat form dikirim, data divalidasi dulu. Jika lolos, buku dimasukkan ke array dan `renderBuku()` dipanggil kembali.
+
+### Kesalahan umum
+
+| Kesalahan                                             | Akibat                                             | Perbaikan                                   |
+| ----------------------------------------------------- | -------------------------------------------------- | ------------------------------------------- |
+| Memasang listener pada tombol di dalam `renderBuku()` | Listener menumpuk atau hilang tiap render          | Gunakan event delegation pada `wadah`       |
+| Lupa `Number()` pada `dataset.id`                     | `"1" === 1` bernilai `false`, buku tidak ditemukan | Ubah dengan `Number(card.dataset.id)`       |
+| Lupa memanggil `renderBuku()` setelah data berubah    | Data berubah, tampilan tidak                       | Panggil `renderBuku()` di akhir setiap aksi |
+| Memakai `innerHTML` untuk judul dari input            | Risiko HTML tidak diinginkan masuk                 | Gunakan `textContent`                       |
+
+## Kesimpulan Lanjutan
+
+Materi lanjutan yang dipelajari adalah:
+
+- Event delegation memasang satu listener pada parent untuk menangani banyak elemen, termasuk elemen yang dibuat belakangan.
+- `event.target.closest()` mencari elemen terdekat yang cocok dengan selector, dan lebih aman daripada `tagName`.
+- `event.target.matches()` memeriksa apakah elemen cocok dengan selector tertentu.
+- `data-*` dan `dataset` digunakan untuk menyimpan serta membaca informasi tambahan pada elemen, seperti `id` dan jenis aksi.
+- `input.value` selalu berupa string, sehingga perlu `trim()` untuk merapikan teks dan `Number()` untuk angka.
+- `FormData` mengambil semua data form sekaligus, dan memerlukan atribut `name` pada setiap input.
+- Validasi memeriksa data sebelum diproses, dan sebaiknya dibuat sebagai fungsi yang mengembalikan pesan error.
+- DOM Traversal berpindah antar elemen menggunakan `parentElement`, `children`, `firstElementChild`, `lastElementChild`, `nextElementSibling`, dan `previousElementSibling`.
+- `children` hanya berisi elemen, sedangkan `childNodes` ikut menghitung node teks.
+- `closest()` lebih tahan terhadap perubahan struktur HTML dibanding `parentElement`.
+- Pola render menyimpan data dalam array, mengubah data saat ada aksi, lalu memanggil `renderBuku()` untuk memperbarui tampilan.
